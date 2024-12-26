@@ -11,10 +11,11 @@ public:
             int col  = q.front().second;
             q.pop();
 
-            vector<pair<int, int>> directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-            for (auto [dr, dc] : directions){
-                int nbrRow = row + dr;
-                int nbrCol = col + dc;
+            vector<int> rowChoice{-1,0,1,0};
+            vector<int> colChoice{0,-1,0,1};
+            for(int i=0;i<4;i++){
+                int nbrRow = row + rowChoice[i];
+                int nbrCol = col + colChoice[i];
                 if(nbrRow>=0 && nbrCol>=0 && nbrRow<n && nbrCol<m &&
                      !visited[nbrRow][nbrCol] && grid[nbrRow][nbrCol]=='1'){
                         visited[nbrRow][nbrCol] = 1;

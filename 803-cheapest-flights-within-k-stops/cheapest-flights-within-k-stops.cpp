@@ -5,15 +5,15 @@ public:
         for (auto it : flights){
             adj[it[0]].push_back({it[1], it[2]});
         }
-        queue< pair<int,pair<int,int>> > pq;
+        queue< pair<int,pair<int,int>> > q;
         vector<int> dist(n,1e9);
         dist[src] = 0;
-        pq.push({0,{src,0}});
-        while(!pq.empty()){
-            int cost = pq.front().first;
-            int node = pq.front().second.first;
-            int stop = pq.front().second.second;
-            pq.pop();
+        q.push({0,{src,0}});
+        while(!q.empty()){
+            int stop = q.front().first;
+            int node = q.front().second.first;
+            int cost = q.front().second.second;
+            q.pop();
 
             if(stop>k) continue;
 
@@ -22,7 +22,7 @@ public:
                 int nuWt = it.second;
                 if(cost+nuWt<dist[nuNode]){ 
                     dist[nuNode] =  cost+nuWt; 
-                    pq.push({dist[nuNode],{nuNode,stop+1}});
+                    q.push({stop+1,{nuNode,dist[nuNode]}});
                 }
             }
 

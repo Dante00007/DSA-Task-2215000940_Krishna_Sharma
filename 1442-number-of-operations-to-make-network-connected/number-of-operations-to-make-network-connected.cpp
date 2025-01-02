@@ -73,6 +73,6 @@ public:
         }
 
         if(cntExtra>=numberOfComponents-1) return numberOfComponents-1;
-        else return -1;
+        return -1;
     }
 };

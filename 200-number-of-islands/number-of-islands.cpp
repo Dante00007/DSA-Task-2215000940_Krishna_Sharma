@@ -1,3 +1,48 @@
+// class Solution {
+// public:
+//     void bfs(int row,int col,vector<vector<char>> &grid,vector<vector<int>> &visited){
+//         int m = grid.size();
+//         int n = grid[0].size();
+//         queue<pair<int,int>> q;
+//         q.push({row,col});
+//         while(!q.empty()){
+//             row = q.front().first;
+//             col  = q.front().second;
+//             q.pop();
+
+//             if(visited[row][col]==1) continue;
+//             visited[row][col] = 1;
+//             vector<int> rowChoice{-1,0,1,0};
+//             vector<int> colChoice{0,-1,0,1};
+//             for(int i=0;i<4;i++){
+//                 int nbrRow = row + rowChoice[i];
+//                 int nbrCol = col + colChoice[i];
+//                 if(nbrRow>=0 && nbrCol>=0 && nbrRow<m && nbrCol<n &&
+//                      !visited[nbrRow][nbrCol] && grid[nbrRow][nbrCol]=='1'){
+//                         q.push({nbrRow,nbrCol});
+//                 }  
+//             }
+
+//         }
+//     }
+//     int numIslands(vector<vector<char>>& grid) {
+        
+//         int m = grid.size();
+//         int n = grid[0].size();
+//         vector<vector<int>> visited(m,vector<int>(n,0));
+        
+//         int count = 0;
+//         for(int i = 0;i<m;i++){
+//             for(int j = 0;j<n;j++){
+//                 if(grid[i][j]=='1' && visited[i][j]==0){
+//                     bfs(i,j,grid,visited);
+//                     count++;
+//                 }
+//             }
+//         }
+//         return count;
+//     }
+// };
 class DisjointSet {
 public:
     vector<int> rank, parent, size;
@@ -11,22 +56,23 @@ public:
         }
     }
 
-    int findUPar(int node) {
+    int findUparent(int node) {
         if (node == parent[node])
             return node;
-        return parent[node] = findUPar(parent[node]);
+        return parent[node] = findUparent(parent[node]);
     }
     void unionBySize(int u, int v) {
-        int ulp_u = findUPar(u);
-        int ulp_v = findUPar(v);
-        if (ulp_u == ulp_v) return;
-        if (size[ulp_u] < size[ulp_v]) {
+        int ulp_u = findUparent(u);
+        int ulp_v = findUparent(v);
+        if(ulp_u==ulp_v) return;
+
+        if(size[ulp_u]<size[ulp_v]){
             parent[ulp_u] = ulp_v;
-            size[ulp_v] += size[ulp_u];
+            size[ulp_v]+=size[ulp_u];
         }
-        else {
+        else{
             parent[ulp_v] = ulp_u;
-            size[ulp_u] += size[ulp_v];
+            size[ulp_u]+=size[ulp_v];
         }
     }
 };

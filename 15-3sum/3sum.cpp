@@ -7,6 +7,10 @@ public:
         set<vector<int>> s;
         int i = 0;
         while(i<n-2){
+            if (i > 0 && nums[i] == nums[i - 1]){
+                i++;
+                continue;
+            }
             int j = i+1;
             int k = n-1;
             int sum = nums[i];
@@ -18,15 +22,15 @@ public:
                     j++;
                 }
                 else{
-                    s.insert({nums[i],nums[j],nums[k]});
+                    ans.push_back({nums[i],nums[j],nums[k]});
                     j++;k--;
+                    while (nums[j] == nums[j - 1] && j < k)
+                        ++j;
                 }
             }
             i++;
         }
-        for(auto it:s){
-            ans.push_back(it);
-        }
+        
         return ans;
     }
 };

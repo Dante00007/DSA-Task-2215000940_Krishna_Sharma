@@ -15,7 +15,11 @@ public:
             }
             i++;
         }
-        intervals.resize(j+1);
+        int n = intervals.size();
+        j = n-(j+1);
+        for(int i=1;i<=j;i++)
+            intervals.pop_back();
+
         return intervals;
     }
 };

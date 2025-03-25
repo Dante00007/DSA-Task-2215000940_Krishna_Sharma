@@ -7,8 +7,7 @@ public:
         for(int i = 0;i<nums.size();i++){
             if(nums[i]<0){
                 index = (nums[i]*-1)-1;
-            }
-            else{
+            }else{
                 index = nums[i]-1;
             }
             if(nums[index]>0){
@@ -16,9 +15,6 @@ public:
             }
             
         }
-        for(int i = 0; i < nums.size(); i++){
-            cout<<nums[i]<<" ";
-        };
         int i = 0;
         while(i<nums.size()){
             if(nums[i]>0){

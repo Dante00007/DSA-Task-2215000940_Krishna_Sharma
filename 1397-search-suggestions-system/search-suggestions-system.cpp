@@ -1,25 +1,42 @@
+class TrieNode{
+    // vector<TrieNode*> children(26);
+    public:
+    unordered_map<char,TrieNode*> children;
+    vector<string> suggestions;
+};
+
 class Solution {
 public:
-    vector<vector<string>> suggestedProducts(vector<string>& A, string searchWord) {
-         auto it = A.begin();
-        sort(it, A.end());
-        for(auto s:A){
-            cout<<s<<" ";
-        }
-        cout<<endl;
-        vector<vector<string>> res;
-        string cur = "";
-        for (char c : searchWord) {
-            cur += c;
-            vector<string> suggested;
-            it = lower_bound(it, A.end(), cur);
-            for (int i = 0; i < 3 && it + i != A.end(); i++) {
-                string& s = *(it + i);
-                if (s.find(cur)) break;
-                suggested.push_back(s);
+    TrieNode* root = new TrieNode();
+    
+    void insert(string& word){
+        TrieNode* node = root;
+        for(char c:word){
+            if(node->children.find(c)==node->children.end()){
+                node->children[c] = new TrieNode();
             }
-            res.push_back(suggested);
+            node = node->children[c];
+            if (node->suggestions.size() < 3)
+                node->suggestions.push_back(word);
         }
-        return res;
+    }
+
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        sort(products.begin(), products.end());
+        for(string& product : products)
+            insert(product);
+        
+        vector<vector<string>> result;
+        TrieNode* node = root;
+
+        for (char c : searchWord) {
+            if (node && node->children[c])
+                node = node->children[c];
+            else
+                node = nullptr;
+            result.push_back(node ? node->suggestions : vector<string>{});
+        }
+
+        return result;
     }
 };

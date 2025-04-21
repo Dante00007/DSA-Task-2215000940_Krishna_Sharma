@@ -4,7 +4,7 @@ public:
         priority_queue<int,vector<int>,greater<int> > pq;
         sort(events.begin(),events.end());
         int n = events.size();
-
+        
         int ans = 0, idx = 0;
 
         for (int d = 1; d <= 100000; d++) {

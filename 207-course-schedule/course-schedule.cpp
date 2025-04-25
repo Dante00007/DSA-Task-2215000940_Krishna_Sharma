@@ -3,27 +3,30 @@ public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         vector<int> indegree(numCourses,0);
         vector<vector<int>> adjList(numCourses);
-        for(int i=0;i<prerequisites.size();i++){
-            indegree[prerequisites[i][1]]++;
-            adjList[prerequisites[i][0]].push_back(prerequisites[i][1]);
+
+        for(auto it:prerequisites){
+            int v = it[0];
+            int u = it[1];
+            indegree[v]++;
+            adjList[u].push_back(v);
         }
 
         queue<int> q;
-        for(int i=0;i<indegree.size();i++){
+
+        for(int i = 0;i<indegree.size();i++){
             if(indegree[i]==0) q.push(i);
         }
-
-        int cnt = 0;
+        int count = 0;
         while(!q.empty()){
             int node = q.front();
             q.pop();
-            cnt++;
-
+            count++;
             for(auto it:adjList[node]){
                 indegree[it]--;
                 if(indegree[it]==0) q.push(it);
             }
         }
-        return cnt==numCourses;
+
+        return numCourses==count;
     }
 };

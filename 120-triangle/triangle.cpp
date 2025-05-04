@@ -13,7 +13,10 @@ public:
     }
     int minimumTotal(vector<vector<int>>& triangle) {
         int m = triangle.size();
-        vector<vector<int>> dp(m,vector<int> (triangle[m-1].size(),-1));
+        vector<vector<int>> dp(m);
+        for(int i=0;i<m;i++){
+            dp[i] = vector<int> (triangle[i].size(),-1);
+        }
         return solve(triangle,0,0,dp);
     }
 };

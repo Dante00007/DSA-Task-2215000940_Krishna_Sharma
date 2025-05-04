@@ -14,8 +14,8 @@ public:
         if(mini==INT_MAX) mini = 0;
         return dp[row][col] = mini + matrix[row][col];
     }
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int n = matrix.size();
+    int minFallingPathSum(vector<vector<int>>& A) {
+        int n = A.size();
         // Still TLE Solution
         // vector<vector<int>> dp(n,vector<int> (n,-1));
         // int mini = INT_MAX;
@@ -24,33 +24,28 @@ public:
         // }
         // return mini;
 
-        vector<vector<int>> dp(n,vector<int> (n,0));
+        // vector<vector<int>> dp(n,vector<int> (n,0));
 
-        for(int i=0;i<n;i++){
-            dp[0][i] = matrix[0][i];
-        }
+        // for(int i=0;i<n;i++){
+        //     dp[0][i] = matrix[0][i];
+        // }
 
-        for(auto it:dp){
-            for(auto ele:it){
-                cout<<ele<<" ";
-            }
-            cout<<endl;
-        }
+        // for(auto it:dp){
+        //     for(auto ele:it){
+        //         cout<<ele<<" ";
+        //     }
+        //     cout<<endl;
+        // }
 
         for(int i=1;i<n;i++){
             for(int j=0;j<n;j++){
-                int lessJ = INT_MAX;
-                int moreJ = INT_MAX;
-                if(j>0) lessJ = dp[i-1][j-1];
-                if(j<n-1) moreJ = dp[i-1][j+1];
-                dp[i][j] = matrix[i][j] + 
-                            min(dp[i-1][j],min(lessJ,moreJ));
+               A[i][j]+= min({A[i-1][j],A[i-1][max(0,j-1)],A[i-1][min((int)A.size()-1,j+1)]});
             }
         }
-        int mini = INT_MAX;
-        for(int i = 0;i<n;i++){
-            mini = min(mini,dp[n-1][i]);
-        }
-        return mini;
+        // int mini = INT_MAX;
+        // for(int i = 0;i<n;i++){
+        //     mini = min(mini,dp[n-1][i]);
+        // }
+        return *min_element(begin(A[A.size() - 1]), end(A[A.size() - 1]));
     }
 };

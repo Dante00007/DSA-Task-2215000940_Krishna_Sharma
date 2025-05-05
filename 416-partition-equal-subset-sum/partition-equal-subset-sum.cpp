@@ -18,9 +18,26 @@ public:
             target+=nums[i];
         }
         if(target&1) return false;
-        vector<vector<int> > dp(n,vector<int> ((target/2)+1 ,-1));
-        return solve(nums,target/2,0,dp);
+        target = target/2;
+        // vector<vector<int> > dp(n,vector<int> (target+1 ,-1));
+        // return solve(nums,target,0,dp);
 
-        // vector<vector<int> > dp(n,vector<int> ((target/2)+1 ,-1));
+        vector<vector<int> > dp(n,vector<int> (target+1 ,0));
+        for(int i= 0;i<n;i++){
+            dp[i][0] = 1;
+        }
+        if(nums[0]<=target) dp[0][nums[0]] = 1;
+
+        for(int ind=1;ind<n;ind++){
+            for(int t=1;t<=target;t++){
+                int exc = dp[ind-1][t];
+                int inc = 0;
+                if(nums[ind]<=t){
+                    inc = dp[ind-1][t-nums[ind]];
+                }
+                dp[ind][t] = exc || inc;
+            }
+        }
+        return dp[n-1][target];
     }
 };

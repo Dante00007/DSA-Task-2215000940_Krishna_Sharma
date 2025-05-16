@@ -43,8 +43,7 @@ public:
             dp[i][0] = 0;
         }
         for(int i = 1;i<=m;i++){
-            if(!dp[0][i])
-                dp[0][i] = isAllStars(p,i);
+            dp[0][i] = isAllStars(p,i);
         }
     
         for(int i=1;i<=n;i++){
@@ -59,7 +58,6 @@ public:
                 }
             }
         }
-        
         return dp[n][m];
     }
 };

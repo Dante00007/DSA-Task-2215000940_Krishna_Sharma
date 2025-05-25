@@ -13,15 +13,16 @@ class Solution {
 public:
     void solve(TreeNode* root,string s,vector<string> &ans){
         if(root==NULL) return;
-        if(root->left==NULL && root->right==NULL){
-            s+=to_string(root->val);
-            ans.push_back(s);
-            return;
-        }
+
         string val = to_string(root->val);
         s+=val;
-        solve(root->left,s+"->",ans);
-        solve(root->right,s+"->",ans);
+        if(root->left || root->right){
+            solve(root->left,s+"->",ans);
+            solve(root->right,s+"->",ans);
+        } 
+        else{
+            ans.push_back(s);
+        }
     }
 
     vector<string> binaryTreePaths(TreeNode* root) {
